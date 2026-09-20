@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social-media</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Login View -->
+  <div id="loginView" class="auth-container">
+    <h2>Login</h2>
+    <form onsubmit="handleLogin(event)">
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <input type="password" id="loginPassword" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="#" onclick="showRegisterPage()">Register</a></p>
+    <p id="loginError" class="error"></p>
+  </div>
+
+  <!-- Register View -->
+  <div id="registerView" class="auth-container hidden">
+    <h2>Register</h2>
+    <form onsubmit="handleRegister(event)">
+      <input type="text" id="regName" placeholder="Full Name" required>
+      <input type="text" id="regUsername" placeholder="Username" required>
+      <input type="email" id="regEmail" placeholder="Email" required>
+      <input type="password" id="regPassword" placeholder="Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="#" onclick="showLoginPage()">Login</a></p>
+    <p id="registerError" class="error"></p>
+  </div>
+
+  <!-- Main App View -->
+  <div id="appView" class="hidden">
+    
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+      <div class="nav-left">
+        <h2>Togetherly</h2>
+      </div>
+      <div class="nav-right">
+        <div class="search-container">
+          <button class="icon-btn" onclick="toggleSearchDropdown()">🔍</button>
+          <div id="searchDropdown" class="search-dropdown hidden">
+            <input type="text" id="headerSearchInput" placeholder="Search users..." oninput="filterSuggestions()">
+            <div id="suggestionsList"></div>
+          </div>
+        </div>
+        <button class="secondary" onclick="logout()">Logout</button>
+      </div>
+    </header>
+
+    <!-- Two Column Dashboard Layout -->
+    <div class="main-layout">
+      
+      <!-- Left Sidebar: Profile, Stats, & Journal (Your Posts) -->
+      <aside class="left-sidebar">
+        <div class="profile-display-section" title="Click to change profile picture">
+          <div class="large-avatar-wrapper" onclick="triggerProfileUpload()">
+            <span id="profileAvatar" class="avatar-text">A</span>
+            <img id="profileImage" class="avatar-img hidden" alt="Profile Picture">
+          </div>
+          <input type="file" id="profilePicInput" class="hidden" accept="image/*" onchange="uploadProfilePicture(event)">
+          <h3 id="profileName">User Name</h3>
+          <p id="profileHandle" class="handle">@username</p>
+          <button id="removeAvatarBtn" class="secondary hidden" style="font-size: 0.75rem; padding: 3px 8px; margin-bottom: 10px;" onclick="removeProfilePicture()">Remove Photo</button>
+        </div>
+
+        <div class="profile-under-stats">
+          <div class="stat-item">
+            <span class="stat-value" id="postsCount">0</span>
+            <span class="stat-label">Posts</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="followersCount">0</span>
+            <span class="stat-label">Followers</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="followingCount">0</span>
+            <span class="stat-label">Following</span>
+          </div>
+        </div>
+
+        <!-- Journal Section (Your Posts on Left) -->
+        <div class="journal-section-container">
+          <h2 class="section-title">JOURNAL</h2>
+          <div class="card create-post-card">
+            <textarea id="postContent" placeholder="What's on your mind?"></textarea>
+            <button onclick="createPost()">Post</button>
+          </div>
+          <div id="userJournalPosts"></div>
+        </div>
+      </aside>
+
+      <!-- Right Column: Feed (Other People's Posts) -->
+      <main class="right-content">
+        <div class="feed-title-banner">
+          <h2 class="section-title">FEED</h2>
+        </div>
+        <div id="otherPostsFeed"></div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- User Profile Modal -->
+  <div id="profileModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeProfileModal()">&times;</span>
+      <div class="modal-profile-header">
+        <div class="modal-avatar-wrapper">
+          <span id="modalAvatar" class="avatar-text">U</span>
+          <img id="modalImage" class="modal-avatar-img hidden" alt="Profile Picture">
+        </div>
+        <h2 id="modalName">Name</h2>
+        <p id="modalHandle">@username</p>
+        <button id="modalFollowBtn" class="follow-modal-btn">Follow</button>
+      </div>
+      <div class="modal-stats">
+        <div>Posts: <span id="modalPostsCount">0</span></div>
+        <div>Followers: <span id="modalFollowersCount">0</span></div>
+        <div>Following: <span id="modalFollowingCount">0</span></div>
+      </div>
+      <div id="modalUserPosts" class="modal-posts-list"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

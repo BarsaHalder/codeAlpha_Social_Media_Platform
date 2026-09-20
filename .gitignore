@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment variables & local secrets
+.env
+
+# Local databases (if using SQLite or similar local files)
+*.sqlite
+*.sqlite3
+data.db
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and runtime data
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
